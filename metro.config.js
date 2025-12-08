@@ -1,11 +1,14 @@
 const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 
-/**
- * Metro configuration
- * https://reactnative.dev/docs/metro
- *
- * @type {import('@react-native/metro-config').MetroConfig}
- */
-const config = {};
+const defaultConfig = getDefaultConfig(__dirname);
 
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+const { assetExts, sourceExts } = defaultConfig.resolver;
+
+const config = {
+  resolver: {
+    assetExts: [...assetExts, 'riv'],
+    sourceExts: sourceExts.filter(ext => ext !== 'riv'),
+  },
+};
+
+module.exports = mergeConfig(defaultConfig, config);
