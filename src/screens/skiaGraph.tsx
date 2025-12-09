@@ -1,40 +1,50 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, Platform } from 'react-native';
-import { Canvas, Path, Skia, Circle, Text, matchFont } from '@shopify/react-native-skia';
+import {View, StyleSheet, Dimensions, Platform} from 'react-native';
+import {
+  Canvas,
+  Path,
+  Skia,
+  Circle,
+  Text,
+  matchFont,
+} from '@shopify/react-native-skia';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const CANVAS_WIDTH = SCREEN_WIDTH - 40;
 const CANVAS_HEIGHT = 300;
 const PADDING = 50;
 const GRAPH_WIDTH = CANVAS_WIDTH - PADDING * 2;
 const GRAPH_HEIGHT = CANVAS_HEIGHT - PADDING * 2;
 
-// Hardcoded data points with random X values
+//  random X values
 const dataPoints = [
-  { xValue: 1, value: 0 },
-  { xValue: 2, value: 62.5 },
-  { xValue: 3, value: 31.6 },
-  { xValue: 4, value: 34.0 },
-  { xValue: 5, value: 44.3 },
-  { xValue: 6, value: 14.0 },
+  {xValue: 1, value: 0},
+  {xValue: 2, value: 62.5},
+  {xValue: 3, value: 31.6},
+  {xValue: 4, value: 34.0},
+  {xValue: 5, value: 44.3},
+  {xValue: 6, value: 14.0},
 ];
 
 // Create fonts for text rendering
-const fontFamily = Platform.select({ ios: 'Helvetica', default: 'sans-serif' });
-const labelFont = matchFont({ fontFamily, fontSize: 10 });
-const valueFont = matchFont({ fontFamily, fontSize: 12 });
-const titleFont = matchFont({ fontFamily, fontSize: 9 });
+const fontFamily = Platform.select({ios: 'Helvetica', default: 'sans-serif'});
+const labelFont = matchFont({fontFamily, fontSize: 10});
+const valueFont = matchFont({fontFamily, fontSize: 12});
+const titleFont = matchFont({fontFamily, fontSize: 9});
 
 const SkiaGraph = () => {
   // Find min and max values for scaling
   const maxValue = 90; // Y-axis max (in thousands USD)
   const minValue = 0;
 
-  // Calculate positions for each data point
+  // Calculate positions for data points
   const points = dataPoints.map((point, index) => {
     const x = PADDING + (index / (dataPoints.length - 1)) * GRAPH_WIDTH;
-    const y = CANVAS_HEIGHT - PADDING - ((point.value - minValue) / (maxValue - minValue)) * GRAPH_HEIGHT;
-    return { x, y, value: point.value, xValue: point.xValue };
+    const y =
+      CANVAS_HEIGHT -
+      PADDING -
+      ((point.value - minValue) / (maxValue - minValue)) * GRAPH_HEIGHT;
+    return {x, y, value: point.value, xValue: point.xValue};
   });
 
   // Create the line path
@@ -63,13 +73,15 @@ const SkiaGraph = () => {
   return (
     <View style={styles.container}>
       <Canvas style={styles.canvas}>
-
         {yAxisLabels.map((label, index) => {
-          const y = CANVAS_HEIGHT - PADDING - ((label - minValue) / (maxValue - minValue)) * GRAPH_HEIGHT;
+          const y =
+            CANVAS_HEIGHT -
+            PADDING -
+            ((label - minValue) / (maxValue - minValue)) * GRAPH_HEIGHT;
           const gridPath = Skia.Path.Make();
           gridPath.moveTo(PADDING, y);
           gridPath.lineTo(CANVAS_WIDTH - PADDING, y);
-          
+
           return (
             <Path
               key={`grid-y-${index}`}
@@ -81,12 +93,11 @@ const SkiaGraph = () => {
           );
         })}
 
- 
         {points.map((point, index) => {
           const gridPath = Skia.Path.Make();
           gridPath.moveTo(point.x, PADDING);
           gridPath.lineTo(point.x, CANVAS_HEIGHT - PADDING);
-          
+
           return (
             <Path
               key={`grid-x-${index}`}
@@ -98,23 +109,10 @@ const SkiaGraph = () => {
           );
         })}
 
+        <Path path={xAxisPath} color="#333333" style="stroke" strokeWidth={2} />
 
-        <Path
-          path={xAxisPath}
-          color="#333333"
-          style="stroke"
-          strokeWidth={2}
-        />
+        <Path path={yAxisPath} color="#333333" style="stroke" strokeWidth={2} />
 
-
-        <Path
-          path={yAxisPath}
-          color="#333333"
-          style="stroke"
-          strokeWidth={2}
-        />
-
- 
         <Path
           path={linePath}
           color="#000000"
@@ -123,7 +121,6 @@ const SkiaGraph = () => {
           strokeCap="round"
           strokeJoin="round"
         />
-
 
         {points.map((point, index) => (
           <Circle
@@ -138,33 +135,33 @@ const SkiaGraph = () => {
         {points.map((point, index) => (
           <Text
             key={`value-${index}`}
-            x={point.x - 10}
+            x={point.x - 20}
             y={point.y - 15}
-            text={point.value.toString()}
+            text={`(${point.xValue},${point.value})`}
             color="#000000"
             font={valueFont}
           />
         ))}
 
+        {yAxisLabels
+          .filter(label => label % 10 === 0)
+          .map((label, index) => {
+            const y =
+              CANVAS_HEIGHT -
+              PADDING -
+              ((label - minValue) / (maxValue - minValue)) * GRAPH_HEIGHT;
+            return (
+              <Text
+                key={`y-label-${index}`}
+                x={PADDING - 30}
+                y={y + 5}
+                text={label.toString()}
+                color="#666666"
+                font={labelFont}
+              />
+            );
+          })}
 
-        {yAxisLabels.filter(label => label % 10 === 0).map((label, index) => {
-          const y = CANVAS_HEIGHT - PADDING - ((label - minValue) / (maxValue - minValue)) * GRAPH_HEIGHT;
-          return (
-            <Text
-              key={`y-label-${index}`}
-              x={PADDING - 30}
-              y={y + 5}
-              text={label.toString()}
-              color="#666666"
-              font={labelFont}
-            />
-          );
-        })}
-
-
-    
-
-     
         {points.map((point, index) => (
           <Text
             key={`x-label-${index}`}

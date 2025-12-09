@@ -12,13 +12,13 @@ import RiveButton from '../screens/rive';
 import SkiaGraph from '../screens/skiaGraph';
 import Donut from '../screens/donut';
 import BarGraph from '../screens/barGraph';
+import FiltersScreen from '../screens/filter';
 
 export type RootStackParamList = {
   Main: undefined;
   Swipe: any;
   Posts: any;
   Audio: any;
-  Audioo: any;
   Test: any;
   Notifications: undefined;
   User: undefined;
@@ -27,6 +27,7 @@ export type RootStackParamList = {
   Skia: undefined;
   Donut: undefined;
   Bar: undefined;
+  Filtr: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -36,11 +37,10 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName="Bar">
+        initialRouteName="Filtr">
         <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="Swipe" component={Swipe} />
         <Stack.Screen name="Posts" component={PostsScreen} />
-        <Stack.Screen name="Audioo" component={AudioRecorderScreen} />
         <Stack.Screen name="Notifications" component={Notifications} />
         <Stack.Screen name="User" component={UserDetailsScreen} />
         <Stack.Screen name="UserD" component={UserDetails} />
@@ -48,7 +48,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Skia" component={SkiaGraph} />
         <Stack.Screen name="Donut" component={Donut} />
         <Stack.Screen name="Bar" component={BarGraph} />
-
+        <Stack.Screen name="Filtr" component={FiltersScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

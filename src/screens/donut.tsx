@@ -4,11 +4,7 @@ import {Canvas, Path, Group, Skia} from '@shopify/react-native-skia';
 
 export default function Donut() {
   // Ring colors (outer → inner)
-  const rings = [
-    {color: '#FF6B6B'}, // Outer ring
-    {color: '#4ECDC4'}, // Middle ring
-    {color: '#FFD93D'}, // Inner ring
-  ];
+  const rings = [{color: '#FF6B6B'}, {color: '#4ECDC4'}, {color: '#FFD93D'}];
 
   // Percentages for each ring (0–1 range)
   const percentages = [0.8, 0.7, 0.5];
@@ -39,27 +35,18 @@ export default function Donut() {
     const strokeWidth = baseStrokeWidth - ringIndex * 2;
     const totalOffset = ringIndex * (baseStrokeWidth + gap);
 
-    const radius =
-      (size - baseStrokeWidth * 2 - totalOffset * 2) / 2;
+    const radius = (size - baseStrokeWidth * 2 - totalOffset * 2) / 2;
 
     const centerOffset = strokeWidth / 2 + totalOffset;
     const percent = percentages[ringIndex];
 
     // ---- White base ring ----
     const base = Skia.Path.Make();
-    base.addCircle(
-      centerOffset + radius,
-      centerOffset + radius,
-      radius,
-    );
+    base.addCircle(centerOffset + radius, centerOffset + radius, radius);
 
     // ---- Colored arc ----
     const arc = Skia.Path.Make();
-    arc.addCircle(
-      centerOffset + radius,
-      centerOffset + radius,
-      radius,
-    );
+    arc.addCircle(centerOffset + radius, centerOffset + radius, radius);
 
     const trimmed = arc.trim(0, animProgress * percent, false);
 
