@@ -13,6 +13,7 @@ import SkiaGraph from '../screens/skiaGraph';
 import Donut from '../screens/donut';
 import BarGraph from '../screens/barGraph';
 import FiltersScreen from '../screens/filter';
+import SignaturePad from '../screens/sign';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -28,6 +29,7 @@ export type RootStackParamList = {
   Donut: undefined;
   Bar: undefined;
   Filtr: undefined;
+  Sign: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -37,7 +39,7 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName="Filtr">
+        initialRouteName="Sign">
         <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="Swipe" component={Swipe} />
         <Stack.Screen name="Posts" component={PostsScreen} />
@@ -49,6 +51,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Donut" component={Donut} />
         <Stack.Screen name="Bar" component={BarGraph} />
         <Stack.Screen name="Filtr" component={FiltersScreen} />
+        <Stack.Screen name="Sign" component={SignaturePad} />
       </Stack.Navigator>
     </NavigationContainer>
   );
