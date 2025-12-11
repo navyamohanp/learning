@@ -14,6 +14,7 @@ import Donut from '../screens/donut';
 import BarGraph from '../screens/barGraph';
 import FiltersScreen from '../screens/filter';
 import SignaturePad from '../screens/sign';
+import ScratchCard from '../screens/scratch';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -30,6 +31,7 @@ export type RootStackParamList = {
   Bar: undefined;
   Filtr: undefined;
   Sign: undefined;
+  Scratch: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -39,7 +41,7 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName="Sign">
+        initialRouteName="Scratch">
         <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="Swipe" component={Swipe} />
         <Stack.Screen name="Posts" component={PostsScreen} />
@@ -52,6 +54,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Bar" component={BarGraph} />
         <Stack.Screen name="Filtr" component={FiltersScreen} />
         <Stack.Screen name="Sign" component={SignaturePad} />
+        <Stack.Screen name="Scratch" component={ScratchCard} />
       </Stack.Navigator>
     </NavigationContainer>
   );
