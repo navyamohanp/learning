@@ -15,6 +15,7 @@ import BarGraph from '../screens/barGraph';
 import FiltersScreen from '../screens/filter';
 import SignaturePad from '../screens/sign';
 import ScratchCard from '../screens/scratch';
+import RewardAnimation from '../screens/reward';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -32,6 +33,7 @@ export type RootStackParamList = {
   Filtr: undefined;
   Sign: undefined;
   Scratch: undefined;
+  Reward: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -41,7 +43,7 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName="Scratch">
+        initialRouteName="Reward">
         <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="Swipe" component={Swipe} />
         <Stack.Screen name="Posts" component={PostsScreen} />
@@ -55,6 +57,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Filtr" component={FiltersScreen} />
         <Stack.Screen name="Sign" component={SignaturePad} />
         <Stack.Screen name="Scratch" component={ScratchCard} />
+        <Stack.Screen name="Reward" component={RewardAnimation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

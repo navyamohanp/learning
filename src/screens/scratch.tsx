@@ -55,7 +55,6 @@ export default function ScratchScreen() {
           </Group>
         </Canvas>
 
-        {/* TOUCH HANDLER LAYER */}
         <View
           style={{position: 'absolute', width, height, zIndex: 10}}
           onStartShouldSetResponder={() => true}
